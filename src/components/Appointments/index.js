@@ -7,7 +7,7 @@ import Status from "./Status";
 import useVisualMode from "hooks/useVisualMode";
 import Form from "./Form";
 import Confirm from "./Confirm";
-
+import Error from "./Error";
 
 export default function Appointment(props) {
   const EMPTY = "EMPTY";
@@ -17,35 +17,46 @@ export default function Appointment(props) {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
-  const save = function (name, interviewer) {
+  function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
+
     transition(SAVING);
-    props.bookInterview(props.id, interview)
-      .then(() => {
-        transition(SHOW);
-      });
-  };
+
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch(error => transition(ERROR_SAVE, true));
+  }
 
   function deleteAppointment() {
     transition(CONFIRM);
   }
 
   function deleteConfirm(id) {
-    transition(DELETING);
+    transition(DELETING, true);
     props.cancelInterview(props.id)
-      .then(() => transition(EMPTY));
+      .then(() => transition(EMPTY))
+      .catch(error => transition(ERROR_DELETE, true));
   }
   function cancelDelete() {
     transition(SHOW);
   }
+
+  function onClose() {
+    back()
+    back()
+  }
+
   return (
     <article className="appointment">
       <Header time={props.time} />
@@ -85,6 +96,18 @@ export default function Appointment(props) {
           onSave={save}
           student={props.interview.student}
           interview={props.interview.interviewer.id}
+        />}
+
+      {mode === ERROR_SAVE &&
+        <Error
+          message="Can't create appointment"
+          onClose={onClose}
+        />}
+
+      {mode === ERROR_DELETE &&
+        <Error
+          message="Could not cancel appointment"
+          onClose={onClose}
         />}
     </article>
   );
