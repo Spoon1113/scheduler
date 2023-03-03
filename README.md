@@ -21,3 +21,6 @@ npm test
 ```sh
 npm run storybook
 ```
+![](https://github.com/Spoon1113/scheduler/blob/master/docs/appointment_form.png?raw=true)
+![](https://github.com/Spoon1113/scheduler/blob/master/docs/add_appointment.png?raw=true)
+![](https://github.com/Spoon1113/scheduler/blob/master/docs/confirm_delete.png?raw=true)
