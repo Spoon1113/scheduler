@@ -31,7 +31,7 @@ export default function Application(props) {
       />
     );
   });
-
+  appointmentArr.push(<Appointment key="last" time="5pm" />);
   return (
     <main className="layout">
       <section className="sidebar">
