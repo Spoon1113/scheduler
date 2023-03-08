@@ -3,6 +3,10 @@ import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
 
 export default function Form(props) {
+  const [error, setError] = useState("");
+  const [student, setStudent] = useState(props.student || "");
+  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+
   const reset = () => {
     setStudent("");
     setInterviewer(null);
@@ -25,10 +29,7 @@ export default function Form(props) {
     setError("");
     props.onSave(student, interviewer);
   };
-  const [error, setError] = useState("");
-  const [student, setStudent] = useState(props.student || "");
-  const [interviewer, setInterviewer] = useState(props.interviewer || null);
-
+  
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
