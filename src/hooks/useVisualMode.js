@@ -9,7 +9,7 @@ export default function useVisualMode(initial) {
       history.pop();
     }
     setMode(newMode);
-    setHistory(prev => [...prev, newMode]);
+    setHistory((prev) => [...prev, newMode]);
   }
 
   function back() {
@@ -21,6 +21,4 @@ export default function useVisualMode(initial) {
     }
   }
   return { mode, transition, back };
-
-
 }
