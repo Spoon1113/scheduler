@@ -55,7 +55,6 @@ export default function Appointment(props) {
 
   function onClose() {
     back();
-    back();
   }
 
   return (
